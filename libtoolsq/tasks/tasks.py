@@ -35,14 +35,7 @@ def runall(
         affiliate="University of Oklahoma"
     ):
     """
-    This task adds widgets to the dspace system
-    
-    args:
-      id (integer); "id of the task"
-      publisher (string); "the name of the publisher that owns the article"
-      startdate (string); formated as year-month-day
-      enddate (string); formated as year-month-day
-      affiliate (string); default is "University of Oklahoma"
-    """
+	test string
+    """
     path = libtooljournalpath(id, publisher, startdate, enddate, affiliate)
     return processjournal(path)

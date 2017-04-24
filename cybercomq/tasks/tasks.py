@@ -1,18 +1,38 @@
 from celery.task import task
-from dockertask import docker_task
-from subprocess import call,STDOUT
-import requests
-
-#Default base directory 
-#basedir="/data/static/"
+from subprocess import check_output
 
 
-#Example task
-@task()
-def add(x, y):
+def libtooljournalpath(
+        id, publisher, startdate, enddate,
+        affiliate="University of Oklahoma"
+    ):
     """ Example task that adds two numbers or strings
         args: x and y
         return addition or concatination of strings
     """
-    result = x + y
-    return result
+    cmd_tmp = "mvn exec:exec@journal-search -Ddata=\'{{\"journal-search\": {{\"id\" : \"{0}\", \"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}}}\' -f ./kernel-api/pom.xml"
+
+    cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
+
+    resp = check_output(cmd, shell=True)
+
+    # if command returns just the path
+    return resp
+
+    # else if path is last line in stdout
+    return [line for line in resp.splitlines()][-1]
+
+
+def processjournal(path):
+    with open(path, "r") as f:
+        return f.read()
+
+
+
+@task
+def runall(
+        id, publisher, startdate, enddate,
+        affiliate="University of Oklahoma"
+    ):
+    path = libtooljournalpath(id, publisher, startdate, enddate, affiliate)
+    return processjournal(path)

@@ -1,5 +1,5 @@
 from celery.task import task
-from subprocess import check_output
+from subprocess import check_output, CalledProcessError
 
 
 def libtooljournalpath(

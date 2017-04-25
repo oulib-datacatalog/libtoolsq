@@ -25,9 +25,7 @@ def libtooljournalpath(
 
 
 def processjournal(path):
-    with open(path, "r") as f:
-        return f.read()
-
+    return str(path)
 
 
 @task
@@ -39,4 +37,4 @@ def runall(
 	test string
     """
     path = libtooljournalpath(id, publisher, startdate, enddate, affiliate)
-    return processjournal(str(path))
+    print str(path)

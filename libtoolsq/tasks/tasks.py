@@ -13,7 +13,7 @@ def libtooljournalpath(
     cmd_tmp = "mvn exec:exec@journal-search -Ddata=\'{{\"journal-search\": {{\"id\" : \"{0}\", \"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}}}\' -f ./kernal-api/pom.xml"
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
     try:
-        resp = check_output("mvn -v", shell=True)
+        resp = check_output(cmd, shell=True)
     except CalledProcessError:
         return {"status": "error catched"}
 

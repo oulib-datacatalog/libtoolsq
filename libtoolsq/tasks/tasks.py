@@ -37,4 +37,4 @@ def runall(
 	test string
     """
     path = libtooljournalpath(id, publisher, startdate, enddate, affiliate)
-    print str(path)
+    return str(path)

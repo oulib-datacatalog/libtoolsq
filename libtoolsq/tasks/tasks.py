@@ -39,4 +39,4 @@ def runall(
 	test string
     """
     path = libtooljournalpath(id, publisher, startdate, enddate, affiliate)
-    return processjournal(path)
+    return processjournal(str(path))

@@ -16,7 +16,7 @@ def libtooljournalpath(
 #        resp = check_output(cmd, shell=True)
 #    except CalledProcessError:
 #        return {"status": "error catched"}
-    cmd_tmp = "mvn -v"
+    cmd = "mvn -v"
     resp = check_output(cmd, shell=True)
     # if command returns just the path
     return resp

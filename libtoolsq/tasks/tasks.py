@@ -10,13 +10,13 @@ def libtooljournalpath(
         args: x and y
         return addition or concatination of strings
     """
-    cmd_tmp = "mvn exec:exec@journal-search -Ddata=\'{{\"journal-search\": {{\"id\" : \"{0}\", \"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
-    cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
+#    cmd_tmp = "mvn exec:exec@journal-search -Ddata=\'{{\"journal-search\": {{\"id\" : \"{0}\", \"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+#    cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
 #    try:
 #        resp = check_output(cmd, shell=True)
 #    except CalledProcessError:
 #        return {"status": "error catched"}
-#    cmd = "mvn -v"
+    cmd = "mvn -v"
     resp = check_output(cmd, shell=True)
     # if command returns just the path
     return resp
@@ -35,7 +35,7 @@ def runall(
         affiliate="University of Oklahoma"
     ):
     """
-	test string
+	test string 2
     """
     path = libtooljournalpath(id, publisher, startdate, enddate, affiliate)
     return str(path)

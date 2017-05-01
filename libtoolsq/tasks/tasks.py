@@ -54,8 +54,8 @@ def libtoolsjournalsaf(id, dois, startdate, enddate):
 def runjournalsaf(
         id, dois, startdate, enddate
     ):
-    """"
+    """
         "Generate the DSpace SAF package for importing"
-    """"
+    """
     path = libtoolsjournalsaf(id, dois, startdate, enddate)
     return str(path)

@@ -59,3 +59,27 @@ def runjournalsaf(
     """
     path = libtoolsjournalsaf(id, dois, startdate, enddate)
     return str(path)
+
+
+def libtoolsjournalimport(id, dois, startdate, enddate):
+    cmd_tmp = "mvn exec:exec@journal-search -Ddata=\'{{\"journal-saf\": {{\"id\" : \"{0}\", \"safpath\" : \"{1}\", \"collectionhandle\": \"{2}\", \"dspaceapiurl\" : \"{3}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+    cmd = cmd_tmp.format(id, safpath, collectionhandle, dspaceapiurl)
+    try:
+        resp = check_output(cmd, shell=True)
+    except CalledProcessError:
+        return {"status": "error catched"}
+    # if command returns just the path
+    return resp
+
+    # else if path is last line in stdout
+    return [line for line in resp.splitlines()][-1]
+
+@task
+def runjournalimport(
+        id, safpath, collectionhandle, dspaceapiurl
+    ):
+    """
+        "Import the DSpace SAF package into DSpace repository"
+    """
+    path = libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl)
+    return str(path)

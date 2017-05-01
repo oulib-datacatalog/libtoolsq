@@ -41,8 +41,8 @@ def libtoolsjournalsaf(id, dois, startdate, enddate):
     cmd_tmp = "mvn exec:exec@journal-search -Ddata=\'{{\"journal-saf\": {{\"id\" : \"{0}\", \"dois\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd = cmd_tmp.format(id, dois, startdate, enddate)
     try:
-        resp = check_output()
-    except CalledProcessError
+        resp = check_output(cmd, shell=True)
+    except CalledProcessError:
         return {"status": "error catched"}
     # if command returns just the path
     return resp

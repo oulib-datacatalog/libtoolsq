@@ -1,6 +1,8 @@
 from celery.task import task
 from subprocess import check_output, CalledProcessError
+import os
 
+os.environ["PATH"] = "/usr/local/Cellar/maven/3.3.9/libexec/bin" + os.pathsep + os.environ["PATH"]
 
 def libtooljournalpath(
         id, publisher, startdate, enddate,

@@ -21,7 +21,7 @@ def libtooljournalpath(
 #        return {"status": "error catched"}
 
     # if command returns just the path
-    return resp
+    print resp
 
     # else if path is last line in stdout
 #    return [line for line in resp.splitlines()][-1]

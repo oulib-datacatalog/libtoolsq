@@ -61,7 +61,7 @@ def runjournalsaf(
     return str(path)
 
 
-def libtoolsjournalimport(id, dois, startdate, enddate):
+def libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl):
     cmd_tmp = "mvn exec:exec@journal-search -Ddata=\'{{\"journal-saf\": {{\"id\" : \"{0}\", \"safpath\" : \"{1}\", \"collectionhandle\": \"{2}\", \"dspaceapiurl\" : \"{3}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd = cmd_tmp.format(id, safpath, collectionhandle, dspaceapiurl)
     try:

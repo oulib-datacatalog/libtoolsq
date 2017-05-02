@@ -62,7 +62,7 @@ def runjournalsaf(
 
 
 def libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl):
-    cmd_tmp = "mvn exec:exec@journal-import -Ddata=\'{{\"journal-import\": {{\"id\" : \"{0}\", \"safpath\" : \"{1}\", \"collectionhandle\": \"{2}\", \"dspaceapiurl\" : \"{3}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+    cmd_tmp = "mvn exec:exec@journal-import -Ddata=\'{{\"journal-import\": {{\"id\" : \"{0}\", \"safPath\" : \"{1}\", \"collectionHandle\": \"{2}\", \"dspaceApiUrl\" : \"{3}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd = cmd_tmp.format(id, safpath, collectionhandle, dspaceapiurl)
     try:
         resp = check_output(cmd, shell=True)

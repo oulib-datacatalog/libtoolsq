@@ -12,7 +12,8 @@ def libtoolsjournalsearch(
         args: x and y
         return addition or concatination of strings
     """
-    id = str(function.request.id)
+#    id = str(function.request.id)
+    id = celery.current_task.task_id
     cmd_tmp = "mvn exec:exec@journal-search -Ddata=\'{{\"journal-search\": {{\"id\" : \"{0}\", \"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
     try:

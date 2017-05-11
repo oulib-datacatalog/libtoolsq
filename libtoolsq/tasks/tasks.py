@@ -34,7 +34,7 @@ def runjournalsearch(
     """
 	Search journal articles in a data range based on the publisher, start date and end date
     """
-    path = libtoolsjournalsearch(id, publisher, startdate, enddate, affiliate)
+    path = libtoolsjournalsearch(publisher, startdate, enddate, affiliate)
     return str(path)
 
 

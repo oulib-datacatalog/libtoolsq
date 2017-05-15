@@ -23,7 +23,7 @@ def libtoolsjournalsearch(
 
     # if command returns just the path
     test_results = test()
-    return [resp, test_resutls]
+    return [resp, test_results]
 
     # else if path is last line in stdout
 #    return [line for line in resp.splitlines()][-1]

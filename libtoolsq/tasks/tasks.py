@@ -14,7 +14,8 @@ def runJournalTasks(
     ):
     """ Run the journals-search, journal-saf, and journal-import in one task
     """
-    journalSearchOutput = libtoolsjournalsearch(publisher, startdate, enddate, affiliate)
+    id = str(runJournalTasks.request.id)
+    journalSearchOutput = libtoolsjournalsearch(id,publisher, startdate, enddate, affiliate)
 
     jsonPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-search", id, startdate+"_"+enddate+".json")
     jsonData = open(jsonPath, 'r').read()
@@ -25,14 +26,14 @@ def runJournalTasks(
     return doi        
 
 def libtoolsjournalsearch(
-        publisher, startdate, enddate,
+        id,publisher, startdate, enddate,
         affiliate="University of Oklahoma"
     ):
     """ Example task that adds two numbers or strings
         args: x and y
         return addition or concatination of strings
     """
-    id = str(runjournalsearch.request.id)
+    
     cmd_tmp = "mvn exec:exec@journal-search -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
     try:
@@ -40,7 +41,7 @@ def libtoolsjournalsearch(
     except CalledProcessError:
         return {"status": "error catched"}
 
-    return resp, test_results
+    return resp
 
     # else if path is last line in stdout
 #    return [line for line in resp.splitlines()][-1]
@@ -53,7 +54,8 @@ def runjournalsearch(
     """
 	Search journal articles in a data range based on the publisher, start date and end date
     """
-    path = libtoolsjournalsearch(publisher, startdate, enddate, affiliate)
+    id = str(runjournalsearch.request.id)
+    path = libtoolsjournalsearch(id,publisher, startdate, enddate, affiliate)
     return str(path)
 
 

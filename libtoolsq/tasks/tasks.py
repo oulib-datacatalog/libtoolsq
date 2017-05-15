@@ -15,14 +15,14 @@ def libtoolsjournalsearch(
     id = str(runjournalsearch.request.id)
     cmd_tmp = "mvn exec:exec@journal-search -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
-    return cmd
+#    return cmd
 #    try:
-#        resp = check_output(cmd, shell=True)
+    resp = check_output(cmd, shell=True)
 #    except CalledProcessError:
 #        return {"status": "error catched"}
 
     # if command returns just the path
-#    return resp
+    return resp
 
     # else if path is last line in stdout
 #    return [line for line in resp.splitlines()][-1]

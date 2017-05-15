@@ -19,7 +19,7 @@ def runJournalTasks(
     jsonPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-search", id, startdate+"_"+enddate+".json")
     jsonData = open(jsonPath, 'r').read()
     jsonObjList = json.loads(jsonData)
-    for obj in jsonObjList
+    for obj in jsonObjList:
         doi += obj["doi"]+";"
     doi = doi[:-1]
     return doi        

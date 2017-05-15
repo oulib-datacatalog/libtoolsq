@@ -22,7 +22,8 @@ def libtoolsjournalsearch(
 #        return {"status": "error catched"}
 
     # if command returns just the path
-    return resp
+    test_results = test()
+    return [resp, test_resutls]
 
     # else if path is last line in stdout
 #    return [line for line in resp.splitlines()][-1]
@@ -85,4 +86,7 @@ def runjournalimport(
     """
     path = libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl)
     return str(path)
+
+def test():
+    return "This is a simple test"
 

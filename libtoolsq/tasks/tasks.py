@@ -9,8 +9,8 @@ LIBREPOTOLLS_ROOT_PATH = "/var/local/librepotools/librepotools-data"
 @task
 def runJournalTasks(
         publisher, startdate, enddate,
-        affiliate="Universitoy of Oklahoma",
-        collectionhandle, dspaceapiurl
+        collectionhandle, dspaceapiurl,
+        affiliate="Universitoy of Oklahoma"
     ):
     """ Run the journals-search, journal-saf, and journal-import in one task
     """

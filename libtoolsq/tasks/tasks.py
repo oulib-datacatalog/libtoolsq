@@ -10,7 +10,7 @@ LIBREPOTOLLS_ROOT_PATH = "/var/local/librepotools/librepotools-data"
 def runJournalTasks(
         publisher, startdate, enddate,
         collectionhandle, dspaceapiurl,
-        affiliate="Universitoy of Oklahoma"
+        affiliate="University of Oklahoma"
     ):
     """ Run the journals-search, journal-saf, and journal-import in one task
     """

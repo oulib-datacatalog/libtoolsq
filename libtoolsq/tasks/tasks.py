@@ -41,8 +41,8 @@ def runJournalTasks(
         if "safPath=" in line:
             safPath = line.split("=")[1]
 
-    libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
-    return safPath
+    importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
+    return importOutput
 #    return {'searchResults' : journalSearchOutput, 'dois' : dois, 'safPackagePath' : safPath}        
 
 def libtoolsjournalsearch(

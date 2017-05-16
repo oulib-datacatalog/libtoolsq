@@ -31,8 +31,9 @@ def runJournalTasks(
     journalSafOutput = libtoolsjournalsaf(id, dois, startdate, enddate)
     
     #### Importing the SAF package ####
-    safPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-saf", id, "userInputInfo.txt")
-    with open(jsonPath) as f:
+    safPath = ""
+    userInputInfoTxtPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-saf", id, "userInputInfo.txt")
+    with open(userInputInfoTxtPath) as f:
         content = f.readlines()
 
     for line in content:

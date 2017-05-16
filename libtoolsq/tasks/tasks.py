@@ -15,6 +15,8 @@ def runJournalTasks(
     """ Run the journals-search, journal-saf, and journal-import in one task
     """
     id = str(runJournalTasks.request.id)
+
+    #### Search the article information ####
     journalSearchOutput = libtoolsjournalsearch(id,publisher, startdate, enddate, affiliate)
 
     jsonPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-search", id, startdate+"_"+enddate+".json")
@@ -24,9 +26,22 @@ def runJournalTasks(
     for obj in jsonObjList:
         dois += obj["doi"]+";"
     dois = dois[:-1]
-    
+
+    #### Generating the SAF package ####
     journalSafOutput = libtoolsjournalsaf(id, dois, startdate, enddate)
-    return {'searchResults' : journalSearchOutput, 'dois' : dois, 'safPackagePath' : journalSafOutput}        
+    
+    #### Importing the SAF package ####
+    safPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-saf", id, "userInputInfo.txt")
+    with open(jsonPath) as f:
+        content = f.readlines()
+
+    for line in content:
+        if "safPath=" in line:
+            safPath = line.split("=")[1]
+
+    libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
+
+    return {'searchResults' : journalSearchOutput, 'dois' : dois, 'safPackagePath' : safPath}        
 
 def libtoolsjournalsearch(
         id,publisher, startdate, enddate,

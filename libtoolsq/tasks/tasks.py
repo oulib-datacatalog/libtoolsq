@@ -18,14 +18,15 @@ def runJournalTasks(
     journalSearchOutput = libtoolsjournalsearch(id,publisher, startdate, enddate, affiliate)
 
     jsonPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-search", id, startdate+"_"+enddate+".json")
-#    jsonPath = LIBREPOTOLLS_ROOT_PATH + "/dspace/commandline/journal-search/" + id + "/" + startdate + "_" + enddate + ".json"
     jsonData = open(jsonPath, 'r').read()
     jsonObjList = json.loads(jsonData)
-    doi = ""
+    dois = ""
     for obj in jsonObjList:
-        doi += obj["doi"]+";"
-    doi = doi[:-1]
-    return {'searchResults' : journalSearchOutput, 'doi' : doi}        
+        dois += obj["doi"]+";"
+    dois = dois[:-1]
+    
+    journalSafOutput = libtoolsjournalsaf(id, dois, startdate, enddate)
+    return {'searchResults' : journalSearchOutput, 'doi' : doi, 'safPackagePath' : journalSafOutput}        
 
 def libtoolsjournalsearch(
         id,publisher, startdate, enddate,
@@ -107,7 +108,4 @@ def runjournalimport(
     """
     path = libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl)
     return str(path)
-
-def test():
-    return "This is a simple test"
 

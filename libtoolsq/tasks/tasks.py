@@ -26,7 +26,7 @@ def runJournalTasks(
     dois = dois[:-1]
     
     journalSafOutput = libtoolsjournalsaf(id, dois, startdate, enddate)
-    return {'searchResults' : journalSearchOutput, 'doi' : doi, 'safPackagePath' : journalSafOutput}        
+    return {'searchResults' : journalSearchOutput, 'dois' : dois, 'safPackagePath' : journalSafOutput}        
 
 def libtoolsjournalsearch(
         id,publisher, startdate, enddate,

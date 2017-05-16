@@ -40,6 +40,10 @@ def runJournalTasks(
     for line in content:
         if "safPath=" in line:
             safPath = line.split("=")[1]
+    if "[\"" in safPath:
+        safPath = safPath.replace("[\"","")
+    if "\"]" in safPath:
+        safPath = safPath.replace("\"]","")
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
     return importOutput

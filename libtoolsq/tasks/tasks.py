@@ -39,7 +39,7 @@ def runJournalTasks(
 
     for line in content:
         if "safPath=" in line:
-            safPath = line.split("=")[1]
+            safPath = line.split("=")[1].replace("\n","")
     if "[\"" in safPath:
         safPath = safPath.replace("[\"","")
     if "\"]" in safPath:

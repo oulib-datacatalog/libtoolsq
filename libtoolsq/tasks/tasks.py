@@ -18,12 +18,14 @@ def runJournalTasks(
     journalSearchOutput = libtoolsjournalsearch(id,publisher, startdate, enddate, affiliate)
 
     jsonPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-search", id, startdate+"_"+enddate+".json")
+#    jsonPath = LIBREPOTOLLS_ROOT_PATH + "/dspace/commandline/journal-search/" + id + "/" + startdate + "_" + enddate + ".json"
     jsonData = open(jsonPath, 'r').read()
     jsonObjList = json.loads(jsonData)
+    doi = ""
     for obj in jsonObjList:
         doi += obj["doi"]+";"
     doi = doi[:-1]
-    return doi        
+    return {'searchResults' : journalSearchOutput, 'doi' : doi}        
 
 def libtoolsjournalsearch(
         id,publisher, startdate, enddate,

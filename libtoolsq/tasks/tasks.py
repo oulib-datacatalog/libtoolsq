@@ -63,7 +63,7 @@ def runjournalsearch(
 
 
 def libtoolsjournalsaf(id, dois, startdate, enddate):
-    cmd_tmp = "mvn exec:exec@journal-saf -Ddata=\'{{\"journal-saf\": {{\"id\" : \"{0}\", \"dois\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+    cmd_tmp = "mvn exec:exec@journal-saf -DtaskId=\'{0}\' -DtaskType=\'journal-saf\' -Ddata=\'{{\"dois\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd = cmd_tmp.format(id, dois, startdate, enddate)
     try:
         resp = check_output(cmd, shell=True)
@@ -87,7 +87,7 @@ def runjournalsaf(
 
 
 def libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl):
-    cmd_tmp = "mvn exec:exec@journal-import -Ddata=\'{{\"journal-import\": {{\"id\" : \"{0}\", \"safPath\" : \"{1}\", \"collectionHandle\": \"{2}\", \"dspaceApiUrl\" : \"{3}\"}}}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+    cmd_tmp = "mvn exec:exec@journal-import -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"safPath\" : \"{1}\", \"collectionHandle\": \"{2}\", \"dspaceApiUrl\" : \"{3}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd = cmd_tmp.format(id, safpath, collectionhandle, dspaceapiurl)
     try:
         resp = check_output(cmd, shell=True)

@@ -3,8 +3,8 @@ from subprocess import check_output, CalledProcessError
 import os
 import json
 
-os.environ["PATH"] = "/usr/local/Cellar/maven/3.3.9/libexec/bin" + os.pathsep + os.environ["PATH"]
-LIBREPOTOLLS_ROOT_PATH = "/var/local/librepotools/librepotools-data"
+from celeryconfig import PATH, LIBREPOTOOLS_ROOT_PATH
+os.environ["PATH"] = PATH + os.pathsep + os.environ["PATH"]
 
 @task
 def runJournalTasks(
@@ -19,7 +19,7 @@ def runJournalTasks(
     #### Search the article information ####
     journalSearchOutput = libtoolsjournalsearch(id,publisher, startdate, enddate, affiliate)
 
-    jsonPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-search", id, startdate+"_"+enddate+".json")
+    jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", "journal-search", id, startdate+"_"+enddate+".json")
     jsonData = open(jsonPath, 'r').read()
     jsonObjList = json.loads(jsonData)
     dois = ""
@@ -32,7 +32,7 @@ def runJournalTasks(
     
     #### Importing the SAF package ####
     safPath = ""
-    userInputInfoTxtPath = os.path.join(LIBREPOTOLLS_ROOT_PATH, "dspace", "commandline", "journal-saf", id, "userInputInfo.txt")
+    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", "journal-saf", id, "userInputInfo.txt")
     with open(userInputInfoTxtPath) as f:
         content = f.readlines()
 

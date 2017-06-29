@@ -66,7 +66,8 @@ def libtoolsjournalsearch(
         resp = check_output(cmd, shell=True)
     except CalledProcessError as err:
         logging.error(err)
-        logging.error(environ)
+        logging.error(os.environ)
+	return {"status": "error catched: "+err.output}
 
     return resp
 

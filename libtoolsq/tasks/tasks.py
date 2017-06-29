@@ -2,9 +2,12 @@ from celery.task import task
 from subprocess import check_output, CalledProcessError
 import os
 import json
+import logging
 
 from celeryconfig import PATH, LIBREPOTOOLS_ROOT_PATH
 os.environ["PATH"] = PATH + os.pathsep + os.environ["PATH"]
+
+logging.basicConfig(level=logging.INFO)
 
 @task
 def runJournalTasks(
@@ -61,8 +64,9 @@ def libtoolsjournalsearch(
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
     try:
         resp = check_output(cmd, shell=True)
-    except CalledProcessError:
-        return {"status": "error catched"}
+    except CalledProcessError as err:
+        logging.error(err)
+        logging.error(environ)
 
     return resp
 

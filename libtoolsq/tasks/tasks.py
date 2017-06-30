@@ -4,7 +4,7 @@ import os
 import json
 import logging
 
-from celeryconfig import PATH, LIBREPOTOOLS_ROOT_PATH
+from celeryconfig import PATH, LIBREPOTOOLS_ROOT_PATH, MAVEN_PATH
 os.environ["PATH"] = PATH + os.pathsep + os.environ["PATH"]
 
 logging.basicConfig(level=logging.INFO)
@@ -60,7 +60,7 @@ def libtoolsjournalsearch(
         return addition or concatination of strings
     """
     
-    cmd_tmp = "mvn exec:exec@journal-search -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+    cmd_tmp = "mvn exec:exec@journal-search -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' -f "+MAVEN_PATH
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
     try:
         resp = check_output(cmd, shell=True)

@@ -67,7 +67,7 @@ def libtoolsjournalsearch(
     except CalledProcessError as err:
         logging.error(err)
         logging.error(os.environ)
-        return {"status": "error catched: "+err.output}
+        return {"status": "error catched: {0}".format(err.returncode)}
 
     return resp
 

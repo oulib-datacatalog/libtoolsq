@@ -4,7 +4,7 @@ import os
 import json
 import logging
 
-from celeryconfig import PATH, LIBREPOTOOLS_ROOT_PATH, MAVEN_PATH
+from celeryconfig import PATH, LIBREPOTOOLS_ROOT_PATH, JAR_PATH
 os.environ["PATH"] = PATH + os.pathsep + os.environ["PATH"]
 
 logging.basicConfig(level=logging.INFO)
@@ -60,7 +60,8 @@ def libtoolsjournalsearch(
         return addition or concatination of strings
     """
     
-    cmd_tmp = "mvn exec:exec@journal-search -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' -f "+MAVEN_PATH
+#    cmd_tmp = "mvn exec:exec@journal-search -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' -f "+MAVEN_PATH
+    cmd_tmp = "java -jar " + JAR_PATH + " \'{0}\' \'journal-search\' \'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' " 
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
     try:
         resp = check_output(cmd, shell=True)
@@ -88,7 +89,8 @@ def runjournalsearch(
 
 
 def libtoolsjournalsaf(id, dois, startdate, enddate):
-    cmd_tmp = "mvn exec:exec@journal-saf -DtaskId=\'{0}\' -DtaskType=\'journal-saf\' -Ddata=\'{{\"dois\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+#    cmd_tmp = "mvn exec:exec@journal-saf -DtaskId=\'{0}\' -DtaskType=\'journal-saf\' -Ddata=\'{{\"dois\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+    cmd_tmp = "java -jar " + JAR_PATH + " \'{0}\' \'journal-saf\' \'{{\"dois\": \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\"}}\' "
     cmd = cmd_tmp.format(id, dois, startdate, enddate)
     try:
         resp = check_output(cmd, shell=True)
@@ -112,7 +114,8 @@ def runjournalsaf(
 
 
 def libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl):
-    cmd_tmp = "mvn exec:exec@journal-import -DtaskId=\'{0}\' -DtaskType=\'journal-import\' -Ddata=\'{{\"safPath\" : \"{1}\", \"collectionHandle\": \"{2}\", \"dspaceApiUrl\" : \"{3}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+#    cmd_tmp = "mvn exec:exec@journal-import -DtaskId=\'{0}\' -DtaskType=\'journal-import\' -Ddata=\'{{\"safPath\" : \"{1}\", \"collectionHandle\": \"{2}\", \"dspaceApiUrl\" : \"{3}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
+    cmd_tmp = "java -jar " + JAR_PATH + " \'{0}\' \'journal-import\' \'{{\"safPath\" : \"{1}\", \"collectionHandle\": \"{2}\", \"dspaceApiUrl\" : \"{3}\"}}\' "
     cmd = cmd_tmp.format(id, safpath, collectionhandle, dspaceapiurl)
     try:
         resp = check_output(cmd, shell=True)

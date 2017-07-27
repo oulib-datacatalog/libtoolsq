@@ -2,6 +2,6 @@
 #ez_setup.use_setuptools()
 from setuptools import setup, find_packages
 setup(name='libtoolsq',
-      version='1.0.1',
+      version='1.0.3',
       packages= find_packages(),
 )

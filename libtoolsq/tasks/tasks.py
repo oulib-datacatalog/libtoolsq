@@ -63,13 +63,13 @@ def libtoolsjournalsearch(
 #    cmd_tmp = "mvn exec:exec@journal-search -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' -f "+MAVEN_PATH
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'journal-search\' \'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' " 
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
-    try:
-        resp = check_output(cmd, shell=True)
-    except CalledProcessError as err:
-        logging.error(err)
-        logging.error(os.environ)
-        return {"status": "error catched: "+err.output}
-
+    #try:
+    #    resp = check_output(cmd, shell=True)
+    #except CalledProcessError as err:
+    #    logging.error(err)
+    #    logging.error(os.environ)
+    #    return {"status": "error catched: {0}".format(err.returncode)}
+    resp = check_output(cmd, shell=True)
     return resp
 
     # else if path is last line in stdout

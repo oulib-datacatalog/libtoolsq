@@ -10,6 +10,48 @@ os.environ["PATH"] = PATH + os.pathsep + os.environ["PATH"]
 logging.basicConfig(level=logging.INFO)
 
 @task
+def safPackageGenerationAndImport(
+        csvPath, collectionhandle, dspaceapiurl
+    ):
+
+    id = str(runJournalTasks.request.id)
+
+    #### Generating the SAF package ####
+    safpath = safPackageGen(id, csvPath)
+
+    """
+        "Import the DSpace SAF package into DSpace repository"
+    """
+    path = libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl)
+    return str(path)
+
+
+@task
+def safPackageGeneration(csvPath):
+
+    """ Generate a SAF package using SAFBuilder for DSpace ingestion
+    """
+    id = str(runJournalTasks.request.id)
+
+    #### Generating the SAF package ####
+    return safPackageGen(id, csvPath)
+    
+
+def safPackageGen(id, csvPath):
+
+    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'journal-search\' \'{{\"csvPath\" : \"{1}\"}}\' "
+    cmd = cmd_tmp.format(id, csvPath)
+    try:
+        resp = check_output(cmd, shell=True)
+    except CalledProcessError:
+        return {"status": "error catched"}
+    # if command returns just the path
+    return resp
+
+    # else if path is last line in stdout
+    return [line for line in resp.splitlines()][-1]
+
+@task
 def runJournalTasks(
         publisher, startdate, enddate,
         collectionhandle, dspaceapiurl,

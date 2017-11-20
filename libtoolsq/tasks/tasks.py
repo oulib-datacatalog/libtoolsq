@@ -47,6 +47,7 @@ def safPackageGen(id, csvPath):
         resp = check_output(cmd, shell=True)
     except CalledProcessError:
         return {"status": "error catched"}
+    print "resp = " + resp
     # if command returns just the path
     return resp
 

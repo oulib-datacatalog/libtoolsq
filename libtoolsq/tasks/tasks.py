@@ -149,7 +149,7 @@ def libtoolsjournalsaf(id, dois, startdate, enddate):
 
 @task
 def runjournalsaf(
-        id, dois, startdate, enddate
+        dois, startdate, enddate
     ):
     """
         "Generate the DSpace SAF package for importing"
@@ -175,7 +175,7 @@ def libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl):
 
 @task
 def runjournalimport(
-        id, safpath, collectionhandle, dspaceapiurl
+        safpath, collectionhandle, dspaceapiurl
     ):
     """
         "Import the DSpace SAF package into DSpace repository"

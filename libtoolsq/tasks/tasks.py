@@ -153,6 +153,7 @@ def runjournalsaf(
     """
         "Generate the DSpace SAF package for importing"
     """
+    id = str(runjournalsaf.request.id)
     path = libtoolsjournalsaf(id, dois, startdate, enddate)
     return str(path)
 
@@ -178,6 +179,7 @@ def runjournalimport(
     """
         "Import the DSpace SAF package into DSpace repository"
     """
+    id = str(runjournalimport.request.id)
     path = libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl)
     return str(path)
 

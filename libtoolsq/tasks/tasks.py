@@ -19,6 +19,8 @@ def safPackageGenerationAndImport(
     #### Generating the SAF package ####
     safpath = safPackageGen(id, csvPath)
 
+    print '\n safpath = ' + safpath + ' for safPackageGenerationAndImport id = ' + id
+
     """
         "Import the DSpace SAF package into DSpace repository"
     """

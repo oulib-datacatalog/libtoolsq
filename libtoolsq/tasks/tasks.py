@@ -39,7 +39,7 @@ def safPackageGeneration(csvPath):
 
 def safPackageGen(id, csvPath):
 
-    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'journal-search\' \'{{\"csvPath\" : \"{1}\"}}\' "
+    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'saf-build\' \'{{\"csvPath\" : \"{1}\"}}\' "
     cmd = cmd_tmp.format(id, csvPath)
     try:
         resp = check_output(cmd, shell=True)

@@ -14,7 +14,7 @@ def safPackageGenerationAndImport(
         csvPath, collectionhandle, dspaceapiurl
     ):
 
-    id = str(runJournalTasks.request.id)
+    id = str(safPackageGenerationAndImport.request.id)
 
     #### Generating the SAF package ####
     safpath = safPackageGen(id, csvPath)
@@ -31,7 +31,7 @@ def safPackageGeneration(csvPath):
 
     """ Generate a SAF package using SAFBuilder for DSpace ingestion
     """
-    id = str(runJournalTasks.request.id)
+    id = str(safPackageGeneration.request.id)
 
     #### Generating the SAF package ####
     return safPackageGen(id, csvPath)

@@ -29,20 +29,20 @@ def safPackageGenerationAndImport(
 
 
 @task
-def safPackageGeneration(csvPath):
+def safPackageGeneration(csvPath, zipped="false"):
 
     """ Generate a SAF package using SAFBuilder for DSpace ingestion
     """
     id = str(safPackageGeneration.request.id)
 
     #### Generating the SAF package ####
-    return safPackageGen(id, csvPath)
+    return safPackageGen(id, csvPath, zipped)
     
 
-def safPackageGen(id, csvPath):
+def safPackageGen(id, csvPath, zipped="false"):
 
-    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'saf-build\' \'{{\"csvPath\" : \"{1}\"}}\' "
-    cmd = cmd_tmp.format(id, csvPath)
+    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'saf-build\' \'{{\"csvPath\" : \"{1}\", \"zipped\" : \"{2}\"}}\' "
+    cmd = cmd_tmp.format(id, csvPath, zipped)
     try:
         resp = check_output(cmd, shell=True)
     except CalledProcessError:

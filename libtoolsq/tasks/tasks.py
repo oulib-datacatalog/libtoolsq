@@ -17,7 +17,9 @@ def safPackageGenerationAndImport(
     id = str(safPackageGenerationAndImport.request.id)
 
     #### Generating the SAF package ####
-    safpath = safPackageGen(id, csvPath)
+    safPackageGen(id, csvPath)
+
+    safpath = getSafPathFromUserInputInfoFile(id, "saf-build")
 
     print '\n safpath = ' + safpath + ' for safPackageGenerationAndImport id = ' + id
 
@@ -79,18 +81,7 @@ def runJournalTasks(
     journalSafOutput = libtoolsjournalsaf(id, dois, startdate, enddate)
     
     #### Importing the SAF package ####
-    safPath = ""
-    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", "journal-saf", id, "userInputInfo.txt")
-    with open(userInputInfoTxtPath) as f:
-        content = f.readlines()
-
-    for line in content:
-        if "safPath=" in line:
-            safPath = line.split("=")[1].replace("\n","")
-    if "[\"" in safPath:
-        safPath = safPath.replace("[\"","")
-    if "\"]" in safPath:
-        safPath = safPath.replace("\"]","")
+    safPath = getSafPathFromUserInputInfoFile(id, "journal-saf")
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
     
@@ -105,7 +96,6 @@ def libtoolsjournalsearch(
         return addition or concatination of strings
     """
     
-#    cmd_tmp = "mvn exec:exec@journal-search -DtaskId=\'{0}\' -DtaskType=\'journal-search\' -Ddata=\'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' -f "+MAVEN_PATH
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'journal-search\' \'{{\"publisher\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\", \"affiliate\" : \"{4}\"}}\' " 
     cmd = cmd_tmp.format(id, publisher, startdate, enddate, affiliate)
     #try:
@@ -134,7 +124,6 @@ def runjournalsearch(
 
 
 def libtoolsjournalsaf(id, dois, startdate, enddate):
-#    cmd_tmp = "mvn exec:exec@journal-saf -DtaskId=\'{0}\' -DtaskType=\'journal-saf\' -Ddata=\'{{\"dois\" : \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'journal-saf\' \'{{\"dois\": \"{1}\", \"startDate\": \"{2}\", \"endDate\" : \"{3}\"}}\' "
     cmd = cmd_tmp.format(id, dois, startdate, enddate)
     try:
@@ -160,7 +149,6 @@ def runjournalsaf(
 
 
 def libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl):
-#    cmd_tmp = "mvn exec:exec@journal-import -DtaskId=\'{0}\' -DtaskType=\'journal-import\' -Ddata=\'{{\"safPath\" : \"{1}\", \"collectionHandle\": \"{2}\", \"dspaceApiUrl\" : \"{3}\"}}\' -f /Users/zhao0677/Projects/shareokdata/kernel-api/pom.xml"
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'journal-import\' \'{{\"safPath\" : \"{1}\", \"collectionHandle\": \"{2}\", \"dspaceApiUrl\" : \"{3}\"}}\' "
     cmd = cmd_tmp.format(id, safpath, collectionhandle, dspaceapiurl)
     try:
@@ -184,3 +172,18 @@ def runjournalimport(
     path = libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl)
     return str(path)
 
+def getSafPathFromUserInputInfoFile(id, taskType)
+    safPath = ""
+    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", taskType, id, "userInputInfo.txt")
+    with open(userInputInfoTxtPath) as f:
+        content = f.readlines()
+
+    for line in content:
+        if "safPath=" in line:
+            safPath = line.split("=")[1].replace("\n","")
+    if "[\"" in safPath:
+        safPath = safPath.replace("[\"","")
+    if "\"]" in safPath:
+        safPath = safPath.replace("\"]","")
+
+    return safPath

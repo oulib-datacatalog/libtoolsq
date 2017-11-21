@@ -172,7 +172,7 @@ def runjournalimport(
     path = libtoolsjournalimport(id, safpath, collectionhandle, dspaceapiurl)
     return str(path)
 
-def getSafPathFromUserInputInfoFile(id, taskType)
+def getSafPathFromUserInputInfoFile(id, taskType):
     safPath = ""
     userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", taskType, id, "userInputInfo.txt")
     with open(userInputInfoTxtPath) as f:

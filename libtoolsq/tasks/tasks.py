@@ -10,6 +10,26 @@ os.environ["PATH"] = PATH + os.pathsep + os.environ["PATH"]
 logging.basicConfig(level=logging.INFO)
 
 @task
+def awsDownload(
+    ):
+    id = str(awsDownload.request.id)
+    awsDownloadExec(id, "not empty data")
+    return
+
+def awsDownloadExec(
+        id, data
+    ):
+    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-download\' \'{{\"csvPath\" : \"{1}\"}}\' "
+    cmd = cmd_tmp.format(id, data)
+    try:
+        resp = check_output(cmd, shell=True)
+    except CalledProcessError:
+        return {"status": "error catched"}
+    print "resp = " + resp
+    # if command returns just the path
+    return resp
+
+@task
 def safPackageGenerationAndImport(
         csvPath, collectionhandle, dspaceapiurl
     ):

@@ -21,9 +21,9 @@ def awsDissertationExec(
         id, data
     ):
     print "aws task stated ..."
-    json = loads(data)
-    print 'collection =' + json['collection']
-    print 'files =' + json['files']
+    jsonObj = json.loads(data)
+    print 'collection =' + jsonObj['collection']
+    print 'files =' + jsonObj['files']
 
 @task
 def safPackageGenerationAndImport(

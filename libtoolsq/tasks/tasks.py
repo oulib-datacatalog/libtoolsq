@@ -19,13 +19,14 @@ def awsDissertation(
 def awsDissertationExec(
         id, data
     ):
+    print "aws task stated ..."
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-dissertation\' \'{{\"json\" : \"{1}\"}}\' "
     cmd = cmd_tmp.format(id, data)
     try:
         resp = check_output(cmd, shell=True)
     except CalledProcessError:
         return {"status": "error catched"}
-    print "resp = " + resp
+    print "aws resp = " + resp
     # if command returns just the path
     return resp
 

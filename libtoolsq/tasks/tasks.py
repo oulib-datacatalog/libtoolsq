@@ -20,10 +20,17 @@ def awsDissertation(
 def awsDissertationExec(
         id, data
     ):
-    print "aws task stated ..."
-    jsonObj = json.loads(data)
-    print 'collection =' + jsonObj['collection']
-    print 'items =' + jsonObj['items']
+    with open('/working/data.json', 'w') as outfile:
+    json.dump(data, outfile)
+    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-dissertation\' \'{{\"json\" : \"{1}\"}}\' "
+    cmd = cmd_tmp.format(id, '/working/data.json')
+    try:
+        resp = check_output(cmd, shell=True)
+    except CalledProcessError:
+        return {"status": "error catched"}
+    print "aws resp = " + resp
+    # if command returns just the path
+    return resp
 
 @task
 def safPackageGenerationAndImport(

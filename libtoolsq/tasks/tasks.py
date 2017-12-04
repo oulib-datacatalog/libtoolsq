@@ -20,8 +20,9 @@ def awsDissertation(
 def awsDissertationExec(
         id, data
     ):
+    jsonData = json.loads(data)
     with open('/working/data.json', 'w') as outfile:
-        json.dump(data, outfile)
+        json.dump(jsonData, outfile)
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-dissertation\' \'{{\"json\" : \"{1}\"}}\' "
     cmd = cmd_tmp.format(id, '/working/data.json')
     try:

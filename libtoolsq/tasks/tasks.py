@@ -22,7 +22,7 @@ def awsDissertation(
     with open('/working/data.json', 'w') as outfile:
         json.dump(jsonData, outfile)
 
-    awsDissertationExec(id, data)
+    awsDissertationExec(id)
 
     safPath = getSafPathFromUserInputInfoFile(id, "aws-dissertation")
 

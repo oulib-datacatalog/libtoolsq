@@ -14,15 +14,26 @@ def awsDissertation(
         data
     ):
     id = str(awsDissertation.request.id)
+
+    jsonData = json.loads(data)
+    collectionhandle = jsonData['collection']
+    dspaceapiurl = jsonData['rest endpoint']
+
+    with open('/working/data.json', 'w') as outfile:
+        json.dump(jsonData, outfile)
+
     awsDissertationExec(id, data)
+
+    safPath = getSafPathFromUserInputInfoFile(id, "aws-dissertation")
+
+    importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
+
     return
 
 def awsDissertationExec(
-        id, data
+        id
     ):
-    jsonData = json.loads(data)
-    with open('/working/data.json', 'w') as outfile:
-        json.dump(jsonData, outfile)
+    
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-dissertation\' \'{{\"json\" : \"{1}\"}}\' "
     cmd = cmd_tmp.format(id, '/working/data.json')
     try:

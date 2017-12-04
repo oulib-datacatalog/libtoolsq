@@ -10,16 +10,16 @@ os.environ["PATH"] = PATH + os.pathsep + os.environ["PATH"]
 logging.basicConfig(level=logging.INFO)
 
 @task
-def awsDownload(
+def awsDissertation(
     ):
-    id = str(awsDownload.request.id)
-    awsDownloadExec(id, "not empty data")
+    id = str(awsDissertation.request.id)
+    awsDissertationExec(id, '{"json" : "{\"rest endpoint\": \"https://test.shareok.org/rest\",\"collection\": \"11244/23528\",\"items\": [{\"2002_Eoff_Jennifer_99356001102042\": {\"files\": [\"ul-bagit/private/shareok/2002_Eoff_Jennifer_99356001102042/data/2002_Eoff_Jennifer_Thesis.pdf\",\"ul-bagit/private/shareok/2002_Eoff_Jennifer_99356001102042/data/Abstract.txt\",\"ul-bagit/private/shareok/2002_Eoff_Jennifer_99356001102042/data/Committee.txt\"],\"metadata\": \"<xml> metadata in dublin core format\"}}]}"}')
     return
 
-def awsDownloadExec(
+def awsDissertationExec(
         id, data
     ):
-    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-download\' \'{{\"csvPath\" : \"{1}\"}}\' "
+    cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-dissertation\' \'{{\"json\" : \"{1}\"}}\' "
     cmd = cmd_tmp.format(id, data)
     try:
         resp = check_output(cmd, shell=True)

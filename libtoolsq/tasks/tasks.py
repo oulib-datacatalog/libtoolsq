@@ -18,8 +18,9 @@ def awsDissertation(
     jsonData = json.loads(data)
     collectionhandle = jsonData['collection']
     dspaceapiurl = jsonData['rest endpoint']
+    jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, 'dissertationData.json')
 
-    with open('/working/data.json', 'w') as outfile:
+    with open(jsonPath, 'w') as outfile:
         json.dump(jsonData, outfile)
 
     awsDissertationExec(id)
@@ -28,6 +29,8 @@ def awsDissertation(
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
 
+    os.remove(jsonPath)
+
     return
 
 def awsDissertationExec(
@@ -35,7 +38,7 @@ def awsDissertationExec(
     ):
     
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-dissertation\' \'{{\"json\" : \"{1}\"}}\' "
-    cmd = cmd_tmp.format(id, '/working/data.json')
+    cmd = cmd_tmp.format(id, jsonPath)
     try:
         resp = check_output(cmd, shell=True)
     except CalledProcessError:

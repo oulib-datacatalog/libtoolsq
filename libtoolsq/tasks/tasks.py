@@ -23,7 +23,7 @@ def awsDissertation(
     with open(jsonPath, 'w') as outfile:
         json.dump(jsonData, outfile)
 
-    awsDissertationExec(id)
+    awsDissertationExec(id, jsonPath)
 
     safPath = getSafPathFromUserInputInfoFile(id, "aws-dissertation")
 
@@ -34,7 +34,7 @@ def awsDissertation(
     return
 
 def awsDissertationExec(
-        id
+        id, jsonPath
     ):
     
     cmd_tmp = "java -jar " + LIBREPOTOOLS_JAR_PATH + " \'{0}\' \'aws-dissertation\' \'{{\"json\" : \"{1}\"}}\' "

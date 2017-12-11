@@ -18,7 +18,7 @@ def awsDissertation(
     jsonData = json.loads(data)
     collectionhandle = jsonData['collection']
     dspaceapiurl = jsonData['rest endpoint']
-    jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, 'dissertationData.json')
+    jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "{0}_dissertationData.json".format(id))
 
     with open(jsonPath, 'w') as outfile:
         json.dump(jsonData, outfile)

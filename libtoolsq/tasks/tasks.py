@@ -29,9 +29,11 @@ def awsDissertation(
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
 
+    print "output of DSpace import:\n"+importOutput
+
     os.remove(jsonPath)
 
-    return
+    return importOutput
 
 def awsDissertationExec(
         id, jsonPath

@@ -29,12 +29,12 @@ def awsDissertation(
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
 
-    importInfoPath = getSafPathFromUserInputInfoFile(id, "journal-import")
+    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", taskType, id, "userInputInfo.txt")
 
     prefix = "url__"
 
     jsonData = {}
-    with open(importInfoPath) as import_data:
+    with open(userInputInfoTxtPath) as import_data:
         lines = import_data.readlines()
         for line in lines:
             if prefix in line:

@@ -29,11 +29,30 @@ def awsDissertation(
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
 
-    print "output of DSpace import:\n"+importOutput
+    importInfoPath = getSafPathFromUserInputInfoFile(id, "journal-import")
+
+    prefix = "url__"
+
+    jsonData = {}
+    with open(importInfoPath) as import_data:
+        lines = import_data.readlines()
+        for line in lines:
+            if prefix in line:
+                lineVal = line
+                lineVal = lineVal.replace(prefix, "")
+                lineValArr = lineVal.split("=")
+                itemName = lineValArr[0]
+                itemNameArr = itemName.split("_")
+                mmsid = itemNameArr[len(itemNameArr)-1]
+                importedUrl = lineValArr[1]
+                jsonData[mmsid] = importedUrl.replace("\n","")
+
+    
+    print "jsonData = "+jsonData
 
     os.remove(jsonPath)
 
-    return importOutput
+    return jsonData
 
 def awsDissertationExec(
         id, jsonPath

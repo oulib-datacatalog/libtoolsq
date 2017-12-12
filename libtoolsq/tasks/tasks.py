@@ -29,7 +29,7 @@ def awsDissertation(
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
 
-    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", taskType, id, "userInputInfo.txt")
+    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", "journal-import", id, "userInputInfo.txt")
 
     prefix = "url__"
 

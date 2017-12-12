@@ -42,10 +42,8 @@ def awsDissertation(
                 lineVal = lineVal.replace(prefix, "")
                 lineValArr = lineVal.split("=")
                 itemName = lineValArr[0]
-                itemNameArr = itemName.split("_")
-                mmsid = itemNameArr[len(itemNameArr)-1]
                 importedUrl = lineValArr[1]
-                jsonData[mmsid] = importedUrl.replace("\n","")
+                jsonData[itemName] = importedUrl.replace("\n","")
 
     
     print "jsonData = "+json.dumps(jsonData)

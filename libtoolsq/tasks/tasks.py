@@ -18,7 +18,7 @@ def awsDissertation(
     jsonData = json.loads(data)
     collectionhandle = jsonData['collection']
     dspaceapiurl = jsonData['rest endpoint']
-    jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, 'dissertationData.json')
+    jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "{0}_dissertationData.json".format(id))
 
     with open(jsonPath, 'w') as outfile:
         json.dump(jsonData, outfile)
@@ -29,9 +29,28 @@ def awsDissertation(
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
 
+    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", "journal-import", id, "userInputInfo.txt")
+
+    prefix = "url__"
+
+    jsonData = {}
+    with open(userInputInfoTxtPath) as import_data:
+        lines = import_data.readlines()
+        for line in lines:
+            if prefix in line:
+                lineVal = line
+                lineVal = lineVal.replace(prefix, "")
+                lineValArr = lineVal.split("=")
+                itemName = lineValArr[0].replace("output_dissertation_ul-bagit_", "")
+                importedUrl = lineValArr[1]
+                jsonData[itemName] = importedUrl.replace("\n","")
+
+    
+    print "jsonData = "+json.dumps(jsonData)
+
     os.remove(jsonPath)
 
-    return
+    return jsonData
 
 def awsDissertationExec(
         id, jsonPath

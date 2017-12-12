@@ -48,7 +48,7 @@ def awsDissertation(
                 jsonData[mmsid] = importedUrl.replace("\n","")
 
     
-    print "jsonData = "+jsonData
+    print "jsonData = "+json.dumps(jsonData)
 
     os.remove(jsonPath)
 

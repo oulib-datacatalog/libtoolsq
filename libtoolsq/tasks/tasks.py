@@ -41,7 +41,7 @@ def awsDissertation(
                 lineVal = line
                 lineVal = lineVal.replace(prefix, "")
                 lineValArr = lineVal.split("=")
-                itemName = lineValArr[0].replace("output_dissertation_", "")
+                itemName = lineValArr[0].replace("output_dissertation_ul-bagit_", "")
                 importedUrl = lineValArr[1]
                 jsonData[itemName] = importedUrl.replace("\n","")
 

@@ -19,6 +19,11 @@ def awsDissertation(
     collectionhandle = jsonData['collection']
     dspaceapiurl = jsonData['rest endpoint']
     jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "{0}_dissertationData.json".format(id))
+    jsonData = {}
+    jsonData['fail'] = {}
+    jsonData['success'] = {}
+    prefix = "url__"
+    errorPrefix = "error__"
 
     with open(jsonPath, 'w') as outfile:
         json.dump(jsonData, outfile)
@@ -27,13 +32,23 @@ def awsDissertation(
 
     safPath = getSafPathFromUserInputInfoFile(id, "aws-dissertation")
 
+    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", "aws-dissertation", id, "userInputInfo.txt")
+
+    with open(userInputInfoTxtPath) as import_data:
+        lines = import_data.readlines()
+        for line in lines:
+            if errorPrefix in line:
+                lineVal = line
+                lineVal = lineVal.replace(errorPrefix, "")
+                lineValArr = lineVal.split("=")
+                itemName = lineValArr[0]
+                errorMessage = lineValArr[1]
+                jsonData['fail'][itemName] = errorMessage
+
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
 
-    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", "journal-import", id, "userInputInfo.txt")
+    userInputInfoTxtPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "dspace", "commandline", "journal-import", id, "userInputInfo.txt")    
 
-    prefix = "url__"
-
-    jsonData = {}
     with open(userInputInfoTxtPath) as import_data:
         lines = import_data.readlines()
         for line in lines:
@@ -43,7 +58,14 @@ def awsDissertation(
                 lineValArr = lineVal.split("=")
                 itemName = lineValArr[0].replace("output_dissertation_ul-bagit_", "")
                 importedUrl = lineValArr[1]
-                jsonData[itemName] = importedUrl.replace("\n","")
+                jsonData['success'][itemName] = importedUrl.replace("\n","")
+            elif errorPrefix in line:
+                lineVal = line
+                lineVal = lineVal.replace(errorPrefix, "")
+                lineValArr = lineVal.split("=")
+                itemName = lineValArr[0].replace("output_dissertation_ul-bagit_", "")
+                errorMessage = lineValArr[1]
+                jsonData['fail'][itemName] = errorMessage
 
     
     print "jsonData = "+json.dumps(jsonData)

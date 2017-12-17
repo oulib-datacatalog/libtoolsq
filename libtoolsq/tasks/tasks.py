@@ -19,9 +19,9 @@ def awsDissertation(
     collectionhandle = jsonData['collection']
     dspaceapiurl = jsonData['rest endpoint']
     jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "{0}_dissertationData.json".format(id))
-    jsonData = {}
-    jsonData['fail'] = {}
-    jsonData['success'] = {}
+    jsonOutputData = {}
+    jsonOutputData['fail'] = {}
+    jsonOutputData['success'] = {}
     prefix = "url__"
     errorPrefix = "error__"
 
@@ -43,7 +43,7 @@ def awsDissertation(
                 lineValArr = lineVal.split("=")
                 itemName = lineValArr[0]
                 errorMessage = lineValArr[1]
-                jsonData['fail'][itemName] = errorMessage
+                jsonOutputData['fail'][itemName] = errorMessage
 
     importOutput = libtoolsjournalimport(id, safPath, collectionhandle, dspaceapiurl)
 
@@ -58,21 +58,21 @@ def awsDissertation(
                 lineValArr = lineVal.split("=")
                 itemName = lineValArr[0].replace("output_dissertation_ul-bagit_", "")
                 importedUrl = lineValArr[1]
-                jsonData['success'][itemName] = importedUrl.replace("\n","")
+                jsonOutputData['success'][itemName] = importedUrl.replace("\n","")
             elif errorPrefix in line:
                 lineVal = line
                 lineVal = lineVal.replace(errorPrefix, "")
                 lineValArr = lineVal.split("=")
                 itemName = lineValArr[0].replace("output_dissertation_ul-bagit_", "")
                 errorMessage = lineValArr[1]
-                jsonData['fail'][itemName] = errorMessage
+                v['fail'][itemName] = errorMessage
 
     
-    print "jsonData = "+json.dumps(jsonData)
+    print "jsonOutputData = "+json.dumps(jsonOutputData)
 
     os.remove(jsonPath)
 
-    return jsonData
+    return jsonOutputData
 
 def awsDissertationExec(
         id, jsonPath

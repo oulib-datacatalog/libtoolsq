@@ -16,7 +16,7 @@ def awsDissertation(
     ):
     id = str(awsDissertation.request.id)
 
-    items = re.sub(r"[\\n\\t\s]*", "", items)
+    items = re.sub(r"[\n\t]*", "", items)
     jsonData = json.loads("{}")
     jsonData['collection'] = collectionhandle
     jsonData['rest endpoint'] = dspaceapiurl

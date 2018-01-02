@@ -18,7 +18,7 @@ def awsDissertation(
     jsonData = json.loads("{}")
     jsonData['collection'] = collectionhandle
     jsonData['rest endpoint'] = dspaceapiurl
-    jsonData['items'] = items
+    jsonData['items'] = json.loads(items)
     # jsonData = json.loads(data.strip())
     # collectionhandle = jsonData['collection']
     # dspaceapiurl = jsonData['rest endpoint']

@@ -1,6 +1,7 @@
 from celery.task import task
 from subprocess import check_output, CalledProcessError
 import os
+import re
 import json
 import logging
 
@@ -15,6 +16,7 @@ def awsDissertation(
     ):
     id = str(awsDissertation.request.id)
 
+    items = re.sub(r"[\\n\\t\s]*", "", items)
     jsonData = json.loads("{}")
     jsonData['collection'] = collectionhandle
     jsonData['rest endpoint'] = dspaceapiurl

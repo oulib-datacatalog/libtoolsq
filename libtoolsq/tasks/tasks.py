@@ -11,13 +11,17 @@ logging.basicConfig(level=logging.INFO)
 
 @task
 def awsDissertation(
-        data
+        dspaceapiurl, collectionhandle, items
     ):
     id = str(awsDissertation.request.id)
 
-    jsonData = json.loads(data.strip())
-    collectionhandle = jsonData['collection']
-    dspaceapiurl = jsonData['rest endpoint']
+    jsonData = json.loads("{}")
+    jsonData['collection'] = collectionhandle
+    jsonData['rest endpoint'] = dspaceapiurl
+    jsonData['items'] = items
+    # jsonData = json.loads(data.strip())
+    # collectionhandle = jsonData['collection']
+    # dspaceapiurl = jsonData['rest endpoint']
     jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "{0}_dissertationData.json".format(id))
     jsonOutputData = {}
     jsonOutputData['fail'] = {}

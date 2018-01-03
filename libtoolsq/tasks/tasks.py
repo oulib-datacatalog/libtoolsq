@@ -14,6 +14,16 @@ logging.basicConfig(level=logging.INFO)
 def awsDissertation(
         dspaceapiurl, collectionhandle, items
     ):
+	
+    """
+    Generate the SAF package from dissertation data and import it into the DSpace repository.
+    
+    args:
+      dspaceapiurl - the REST API endpoint of DSpace repository
+      collectionhandle - the handle of the collection of DSpace repository
+      items - list of the dissertations with each item represents a dissertation.
+    """
+
     id = str(awsDissertation.request.id)
 
     jsonData = {}

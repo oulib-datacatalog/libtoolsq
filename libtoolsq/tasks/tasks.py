@@ -1,6 +1,7 @@
 from celery.task import task
 from subprocess import check_output, CalledProcessError
 import os
+import re
 import json
 import logging
 
@@ -11,13 +12,25 @@ logging.basicConfig(level=logging.INFO)
 
 @task
 def awsDissertation(
-        data
+        dspaceapiurl, collectionhandle, items
     ):
+	
+    """
+    Generate the SAF package from dissertation data and import it into the DSpace repository.
+    
+    args:
+      dspaceapiurl - the REST API endpoint of DSpace repository
+      collectionhandle - the handle of the collection of DSpace repository
+      items - list of the dissertations with each item represents a dissertation.
+    """
+
     id = str(awsDissertation.request.id)
 
-    jsonData = json.loads(data.strip())
-    collectionhandle = jsonData['collection']
-    dspaceapiurl = jsonData['rest endpoint']
+    jsonData = {}
+    jsonData['collection'] = collectionhandle
+    jsonData['rest endpoint'] = dspaceapiurl
+    jsonData['items'] = items
+    
     jsonPath = os.path.join(LIBREPOTOOLS_ROOT_PATH, "{0}_dissertationData.json".format(id))
     jsonOutputData = {}
     jsonOutputData['fail'] = {}
